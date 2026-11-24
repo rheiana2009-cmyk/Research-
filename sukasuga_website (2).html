@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e9ead8">
+<title>SUKASUGA | Coconut Vinegar-Powered Emergency Lamp</title>
+<style>
+:root{
+  color-scheme:light;
+  --cream:#f5f1df;--paper:#fffdf3;--sage:#dce3c6;--sage2:#b9c79b;
+  --green:#40552d;--deep:#26391f;--gold:#d6bd68;--ink:#34402d;
+  --muted:#69715c;--card:#fffdf3;--line:#e3e4d2;--nav:#fffdf3;
+  --shadow:0 18px 45px rgba(45,57,31,.13);
+}
+body[data-theme="dark"]{
+  color-scheme:dark;
+  --cream:#171e18;--paper:#232d23;--sage:#303d2c;--sage2:#61734b;
+  --green:#c1d49b;--deep:#e5edcf;--gold:#d6bd68;--ink:#edf1e3;
+  --muted:#c0cbb0;--card:#232d23;--line:#46543d;--nav:rgba(35,45,35,.96);
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+header{position:sticky;top:12px;z-index:10;width:min(1180px,calc(100% - 32px));margin:12px auto 0}
+nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 22px;background:var(--nav);border:1px solid rgba(64,85,45,.1);border-radius:50px;box-shadow:0 8px 28px #35432315;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;color:var(--green);white-space:nowrap}
+.brand-mark{font-size:27px}
+.navlinks{display:flex;align-items:center;gap:5px}
+.navlinks a,.theme{padding:11px 15px;border-radius:30px;font-size:14px;font-weight:700;color:var(--ink)}
+.navlinks a:hover,.navlinks a.active{background:var(--green);color:white}
+.theme{border:1px solid #d6ddc4;background:var(--card)}
+.menu{display:none;border:0;background:var(--sage);border-radius:50%;width:42px;height:42px;color:var(--green);font-size:20px}
+.hero{min-height:660px;max-width:1280px;margin:auto;padding:75px 5.5% 65px;display:grid;grid-template-columns: .95fr 1.05fr;align-items:center;gap:20px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;background:linear-gradient(140deg,#e7e9d1,#cbd5ad);right:-230px;top:100px;z-index:-1}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:30px;background:var(--sage);color:var(--green);font-size:13px;font-weight:700;letter-spacing:.3px}
+h1{font-size:clamp(54px,7vw,92px);line-height:.95;letter-spacing:-5px;margin:25px 0 14px;color:var(--green);text-shadow:0 3px 0 #a7b58a,0 7px 13px #29391d30}
+.subtitle{font-size:clamp(21px,2.5vw,31px);font-weight:700;line-height:1.2;color:var(--green);margin:0 0 22px}
+.intro{font-size:17px;line-height:1.7;max-width:430px;color:var(--muted)}
+.actions{display:flex;align-items:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+.primary{display:inline-block;background:linear-gradient(#526d37,#344b27);color:white;padding:17px 28px;border-radius:40px;font-weight:700;box-shadow:0 8px 0 #26391f,0 13px 22px #26391f25;transition:.2s}
+.primary:hover{transform:translateY(-3px);box-shadow:0 11px 0 #26391f,0 18px 25px #26391f25}
+.small-note{font-size:12px;color:var(--muted);margin-top:24px}
+.stage{height:500px;position:relative;display:flex;align-items:center;justify-content:center;perspective:1100px;isolation:isolate}
+.platform{position:absolute;bottom:25px;width:88%;height:75px;border-radius:50%;background:linear-gradient(180deg,#fdfbea,#c8d1a7);box-shadow:0 22px 24px #3543232b,inset 0 -9px 0 #9eae7c,inset 0 4px 8px white;transform:rotateX(58deg)}
+.device{position:relative;width:min(430px,90%);height:390px;transform-style:preserve-3d;transform:rotateY(-13deg) rotateX(3deg);animation:float 5s ease-in-out infinite;filter:drop-shadow(20px 28px 17px #29351d35)}
+@keyframes float{0%,100%{transform:translateY(0) rotateY(-13deg) rotateX(3deg)}50%{transform:translateY(-10px) rotateY(-9deg) rotateX(2deg)}}
+.tray{position:absolute;left:4%;width:92%;height:94px;border-radius:16px 16px 25px 25px;background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(162,172,171,.13) 25%,rgba(42,48,49,.96) 27%,#202728 86%,#111819);border:5px solid rgba(224,235,229,.78);box-shadow:inset 0 3px 6px #fff9,0 8px 8px #18251e38;transform:rotateX(5deg);transform-style:preserve-3d}
+.tray:before{content:"";position:absolute;left:-5px;right:-5px;top:-8px;height:25px;border-radius:13px;background:linear-gradient(180deg,#fff9,rgba(220,233,228,.25));border:3px solid #e9f1e7b8;box-shadow:inset 0 2px 4px white}
+.tray:nth-of-type(4){top:28px;z-index:4}
+.tray:nth-of-type(5){top:125px;z-index:3}
+.tray:nth-of-type(6){top:222px;z-index:2}
+.tray:nth-of-type(7){top:319px;z-index:1}
+.cups{position:absolute;top:12px;left:8%;right:8%;display:flex;justify-content:space-around;z-index:2}
+.cup{width:27%;height:48px;border:2px solid #e9f3e8b9;border-top:3px solid #fff;background:linear-gradient(110deg,#ffffff60,#d6e2d655 45%,#ffffff25);border-radius:8px 8px 17px 17px;box-shadow:inset 0 -7px 10px #fff3,0 3px 4px #0003}
+.copper{position:absolute;left:9%;right:9%;top:54px;height:5px;border-radius:5px;background:linear-gradient(#ffe0a0,#a65b2b,#f4bd79);box-shadow:0 2px 4px #0008}
+.wires{position:absolute;z-index:6;top:-5px;left:28%;width:45%;height:43px;border:3px solid transparent;border-top-color:#a42f24;border-radius:50%;transform:rotate(-4deg)}
+.wires:after{content:"";position:absolute;left:12px;top:-3px;width:100%;height:34px;border-top:3px solid #252d2b;border-radius:50%;transform:rotate(9deg)}
+.bulb{position:absolute;z-index:9;top:-25px;left:48%;width:48px;height:62px;padding:0;border:0;background:transparent;appearance:none;cursor:pointer;filter:drop-shadow(0 4px 5px #1b241b55)}
+.bulb:focus-visible{outline:3px solid var(--gold);outline-offset:7px;border-radius:12px}
+.bulb:before{transition:background .25s,box-shadow .25s}
+.bulb:after{left:12px;top:31px;width:24px;height:17px;border-radius:4px 4px 7px 7px;background:linear-gradient(90deg,#73786b,#171b18,#858a7a);box-shadow:0 2px 3px #0008}
+.device.light-off .bulb:before{background:#b9beb0;box-shadow:inset 0 0 7px #7b8275,0 2px 8px #0004}
+.device.light-off .bulb:after{background:linear-gradient(90deg,#656a60,#171b18,#656a60)}
+.device.light-off .light-halo{opacity:0}
+.light-halo{position:absolute;z-index:5;top:-44px;left:39%;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,#fff5a86b 0%,#fff2a52b 35%,transparent 72%);pointer-events:none;transition:opacity .25s}
+.bulb:before{content:"";position:absolute;left:7px;top:0;width:28px;height:34px;border-radius:50% 50% 42% 42%;background:#fffef2;box-shadow:0 0 15px 7px #fff9a8,0 0 45px 18px #ffe98b8c}
+.bulb:after{content:"";position:absolute;left:13px;top:31px;width:16px;height:13px;background:linear-gradient(90deg,#62655a,#171b18,#77796b);border-radius:2px 2px 5px 5px}
+.switch{position:absolute;z-index:7;right:17%;top:1px;width:30px;height:15px;border-radius:5px;background:#171d1c;border:2px solid #69736b;transform:rotate(-7deg)}
+.bulb-caption{position:absolute;z-index:10;top:43px;left:calc(48% + 53px);font-size:10px;font-weight:700;color:var(--green);white-space:nowrap;background:var(--paper);padding:5px 8px;border-radius:12px;box-shadow:0 3px 10px #0002}
+.device-label{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:2px;color:var(--muted);white-space:nowrap}
+.section{padding:80px 6%;max-width:1200px;margin:auto;scroll-margin-top:95px}
+.section-head{text-align:center;margin-bottom:36px}
+.kicker{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+h2{font-size:clamp(30px,4vw,44px);color:var(--green);margin:10px 0}
+.section-head p{color:var(--muted);line-height:1.6;margin:0 auto;max-width:650px}
+.about-card{background:linear-gradient(135deg,var(--sage),var(--card));border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:var(--shadow);max-width:850px;margin:auto;line-height:1.8}
+.material-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.material{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 22px #3846260d;transition:.2s}
+.material:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.material .number{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sage);color:var(--green);font-weight:800;margin-bottom:12px}
+.material h3{margin:0 0 9px;color:var(--green);font-size:18px}
+.material p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+.procedure{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.step{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);padding:22px;border-radius:18px}
+.step b{display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:50%;background:var(--green);color:white}
+.step h3{margin:0 0 7px;color:var(--green);font-size:17px}
+.step p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+.notice{background:var(--sage);border-left:4px solid var(--gold);padding:16px 18px;border-radius:8px;color:var(--ink);line-height:1.6;margin-top:20px;font-size:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.info{background:var(--sage);border-radius:22px;padding:25px;line-height:1.7}
+.info h3{color:var(--green);margin-top:0}
+footer{text-align:center;padding:35px 20px;background:#354a29;color:#f5f1df;font-size:13px;letter-spacing:.5px}
+@media(max-width:850px){
+ .navlinks{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav);padding:12px;border-radius:20px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch}
+ .navlinks.open{display:flex}.navlinks a{text-align:center}.menu{display:block}
+ .hero{grid-template-columns:1fr;text-align:center;padding-top:55px;gap:0}
+ .hero-copy{display:flex;flex-direction:column;align-items:center}
+ .stage{height:440px}.device{transform:scale(.88) rotateY(-13deg)}
+ .platform{bottom:18px}.material-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+ header{width:calc(100% - 20px);top:7px;margin-top:7px}
+ nav{padding:9px 13px}.brand{font-size:18px}.brand-mark{font-size:23px}
+ .hero{padding:48px 18px 35px;min-height:0}
+ h1{letter-spacing:-3px;font-size:61px}
+ .intro{font-size:15px}.stage{height:430px;margin-top:12px}
+ .device{transform:scale(.72) rotateY(-13deg);transform-origin:center center;animation:floatMobile 5s ease-in-out infinite}
+ @keyframes floatMobile{0%,100%{translate:0 0}50%{translate:0 -7px}}
+ .platform{width:95%;bottom:10px;height:55px}
+ .section{padding:58px 18px}.material-grid,.procedure,.split{grid-template-columns:1fr}
+ .material{padding:19px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.device{animation:none}*{transition:none!important}}
+
+/* Enhanced prototype showcase: stronger 3D depth and component details */
+.stage{perspective:1400px}
+.device{width:min(470px,94%);height:430px;transform-style:preserve-3d;animation:float 5.5s ease-in-out infinite;filter:drop-shadow(24px 32px 20px rgba(28,40,24,.3))}
+.tray{left:1%;width:98%;height:102px;border-radius:17px 17px 28px 28px;
+ background:linear-gradient(180deg,rgba(255,255,255,.3) 0%,rgba(215,229,222,.18) 18%,rgba(45,51,51,.98) 23%,#252c2c 83%,#151b1c 100%);
+ border:6px solid rgba(227,241,235,.68);box-shadow:inset 0 5px 10px #ffffff90,inset 0 -8px 9px #080d0d90,0 14px 12px #18251e3b;}
+.tray:before{left:-6px;right:-6px;top:-9px;height:24px;border-radius:16px;background:linear-gradient(180deg,#fffdf9d9,#dce9e3a0 58%,#b8c9c2a0);border:3px solid rgba(245,251,247,.88);box-shadow:0 3px 7px #16231c55,inset 0 2px 4px #fff;}
+.tray:after{content:"";position:absolute;left:3%;right:3%;bottom:-9px;height:13px;border-radius:0 0 13px 13px;background:linear-gradient(90deg,#d9e8e1aa,#6c7976aa,#d9e8e1aa);border:1px solid #e6f0e9a0;}
+.tray:nth-child(1){top:18px;z-index:4}.tray:nth-child(2){top:122px;z-index:3}.tray:nth-child(3){top:226px;z-index:2}.tray:nth-child(4){top:330px;z-index:1}
+.cups{top:13px;left:7%;right:7%;height:48px;justify-content:space-between;}
+.cup{width:28%;height:47px;border:2px solid #e6f0e8c9;border-top:4px solid #fff;border-radius:7px 7px 15px 15px;background:linear-gradient(110deg,#fff9 0%,#c9d9d4a0 25%,#f4faf4a0 48%,#aebfba50 100%);box-shadow:inset 0 -9px 12px #fff5,inset 0 3px 3px #fff,0 4px 6px #1117;position:relative;}
+.cup:after{content:"";position:absolute;bottom:5px;left:4px;right:4px;height:9px;border-radius:50%;background:linear-gradient(90deg,#ffffff40,#a6c0b540,#ffffff60);}
+.copper{top:65px;left:7%;right:7%;height:5px;background:linear-gradient(180deg,#ffd99a,#a35a2b 48%,#f6bd72);box-shadow:0 2px 5px #0009,0 0 3px #f6bc6b;}
+.copper:after{content:"";position:absolute;top:12px;left:0;right:0;height:4px;border-radius:5px;background:linear-gradient(#ffd99a,#a35a2b,#f6bd72);opacity:.95}
+.wires{top:-10px;left:26%;width:49%;height:52px;border-top:4px solid #bb3a2d;filter:drop-shadow(0 2px 1px #0005)}
+.wires:after{left:6px;top:0;width:95%;height:43px;border-top:4px solid #222b29;filter:drop-shadow(0 1px 1px #0005)}
+.bulb{top:-48px;left:49%;width:48px;height:67px;filter:drop-shadow(0 0 8px #ffef9a)}
+.bulb:before{left:7px;width:34px;height:38px;border-radius:50% 50% 42% 42%;background:radial-gradient(circle at 35% 25%,white,#fffef2 55%,#fff2b9);box-shadow:0 0 17px 9px #fff8c5,0 0 50px 24px #ffe98b99}
+.bulb:after{left:15px;top:35px;width:18px;height:16px;background:linear-gradient(90deg,#777b70,#171b18,#92968b);border-radius:3px 3px 6px 6px;box-shadow:0 3px 6px #0005}
+.switch{right:12%;top:5px;width:37px;height:18px;border-radius:5px;background:linear-gradient(#323937,#101514);border:2px solid #778078;box-shadow:0 2px 5px #0007}
+.platform{width:92%;height:83px;bottom:14px;background:linear-gradient(180deg,#fffdf2,#d2dcb3 60%,#a9b780);box-shadow:0 25px 28px #35432330,inset 0 -11px 0 #849660,inset 0 5px 9px white;}
+.device-label{bottom:-16px;font-weight:700;letter-spacing:2.2px}
+@media(max-width:850px){.device{height:400px;transform:scale(.88) rotateY(-13deg)}}
+@media(max-width:560px){.device{transform:scale(.7) rotateY(-13deg);transform-origin:center}.stage{height:355px}}
+
+</style>
+</head>
+<body>
+<header>
+<nav>
+  <a class="brand" href="#home"><span class="brand-mark">🍃</span> SUKASUGA</a>
+  <button class="menu" id="menuBtn" aria-label="Open navigation">☰</button>
+  <div class="navlinks" id="navlinks">
+    <a class="active" href="#home">Home</a><a href="#materials">Materials</a><a href="#procedure">Procedure</a><a href="#how">How It Works</a><a href="#results">Results</a><a href="#about">About</a>
+  </div>
+  <button class="theme" id="themeBtn" aria-label="Toggle appearance">☼</button>
+</nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <div class="eyebrow">🍃 &nbsp; INNOVATIVE&nbsp; • &nbsp; ECO-FRIENDLY&nbsp; • &nbsp; SUSTAINABLE</div>
+    <h1>SUKASUGA</h1>
+    <p class="subtitle">Coconut Vinegar-Powered<br>Emergency Lamp</p>
+    <p class="intro">Turning a simple household ingredient into a possible alternative source of light during emergencies.</p>
+    <div class="actions"><a class="primary" href="#materials">Explore the Innovation&nbsp; →</a></div>
+    <p class="small-note">A student research innovation and step-by-step guide</p>
+  </div>
+  <div class="stage" aria-label="Stylized 3D illustration of the SUKASUGA prototype">
+    <div class="platform"></div>
+    <div class="device">
+      <div class="wires"></div><div class="light-halo"></div><button class="bulb" id="bulbToggle" type="button" aria-label="Turn LED light off" aria-pressed="true" title="Tap to turn the LED on or off"></button><span class="bulb-caption" id="bulbCaption">LED ON · TAP TO SWITCH</span><div class="switch"></div>
+      <div class="tray"><div class="cups"><i class="cup"></i><i class="cup"></i><i class="cup"></i></div><div class="copper"></div></div>
+      <div class="tray"><div class="cups"><i class="cup"></i><i class="cup"></i><i class="cup"></i></div><div class="copper"></div></div>
+      <div class="tray"><div class="cups"><i class="cup"></i><i class="cup"></i><i class="cup"></i></div><div class="copper"></div></div>
+      <div class="tray"><div class="cups"><i class="cup"></i><i class="cup"></i><i class="cup"></i></div><div class="copper"></div></div>
+    </div>
+    <div class="device-label">SUKASUGA • PROTOTYPE DISPLAY</div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-head"><span class="kicker">GET TO KNOW THE PROJECT</span><h2>What is SUKASUGA?</h2><p>A research innovation exploring the use of coconut vinegar as an electrolyte in a small emergency-lighting prototype.</p></div>
+  <div class="about-card">SUKASUGA is a coconut vinegar-powered emergency lamp developed to investigate whether a naturally acidic fermented liquid can help generate electrical energy when used with copper and zinc electrodes. The project evaluates its ability to power a low-voltage LED and explores its potential as an alternative lighting concept.</div>
+</section>
+
+<section class="section" id="materials">
+  <div class="section-head"><span class="kicker">WHAT YOU WILL NEED</span><h2>Materials and Equipment</h2><p>The materials used in developing and testing the SUKASUGA innovation.</p></div>
+  <div class="material-grid">
+    <article class="material"><span class="number">01</span><h3>White LED</h3><p>The white LED served as the light source of the emergency lamp. It was connected to the circuit to determine whether the electrical energy produced by the electrolyte could power the light.</p></article>
+    <article class="material"><span class="number">02</span><h3>Copper Electrode</h3><p>The copper electrode served as the positive electrode (cathode) in the electrochemical cell. It worked together with the zinc electrode to help produce electrical energy.</p></article>
+    <article class="material"><span class="number">03</span><h3>Zinc Electrode</h3><p>The zinc electrode served as the negative electrode (anode). It released electrons during the electrochemical reaction, contributing to the generation of electrical energy.</p></article>
+    <article class="material"><span class="number">04</span><h3>Connecting Wires</h3><p>The connecting wires were used to connect the copper and zinc electrodes to the LED and multimeter. They provided a path for the electrical current to flow through the circuit.</p></article>
+    <article class="material"><span class="number">05</span><h3>Multimeter</h3><p>The multimeter was used to measure the voltage produced by each electrolyte sample. The voltage readings were recorded in volts (V) for every trial.</p></article>
+    <article class="material"><span class="number">06</span><h3>Ammeter</h3><p>The ammeter was used to measure the current flowing through the circuit in order to determine the electrical current produced by the device.</p></article>
+    <article class="material"><span class="number">07</span><h3>Plastic Containers</h3><p>The plastic containers were used to hold the different samples separately during testing. They also helped prevent the liquids from mixing with one another.</p></article>
+    <article class="material"><span class="number">08</span><h3>Measuring Instruments</h3><p>The measuring instruments were used to measure the required amounts of the samples. This helped keep the amount consistent among the treatments.</p></article>
+    <article class="material"><span class="number">09</span><h3>Coconut Vinegar</h3><p>Coconut vinegar is a naturally acidic fermented liquid. In this study, it serves as the primary electrolyte base in the SUKASUGA lamp, where it facilitates electron flow between copper and zinc electrodes to generate electrical energy for emergency lighting.</p></article>
+  </div>
+</section>
+
+<section class="section" id="procedure">
+  <div class="section-head"><span class="kicker">BUILDING THE INNOVATION</span><h2>Step-by-Step Procedure</h2><p>A guide outline for presenting the stages of your project.</p></div>
+  <div class="procedure">
+    <article class="step"><b>1</b><div><h3>Prepare the materials</h3><p>Gather the materials and equipment listed in the Materials section. Check that containers and measuring tools are clean and ready.</p></div></article>
+    <article class="step"><b>2</b><div><h3>Prepare and label the samples</h3><p>Prepare the coconut-vinegar sample and label the containers according to the treatment labels used in your approved research procedure.</p></div></article>
+    <article class="step"><b>3</b><div><h3>Arrange the prototype</h3><p>Arrange the containers and prototype components according to your research design. Keep the copper and zinc electrodes separated.</p></div></article>
+    <article class="step"><b>4</b><div><h3>Connect and check the circuit</h3><p>With teacher or qualified adult supervision, check the low-voltage circuit connections and measuring instruments before testing.</p></div></article>
+    <article class="step"><b>5</b><div><h3>Conduct the tests</h3><p>Follow the exact approved procedure for each trial. Record voltage, current, and observations consistently.</p></div></article>
+    <article class="step"><b>6</b><div><h3>Record and evaluate</h3><p>Organize the recorded measurements, compare the results, and explain what they indicate about the prototype's performance.</p></div></article>
+  </div>
+  <div class="notice"><strong>Safety reminder:</strong> This is an educational low-voltage project. Follow your teacher-approved procedure, use adult supervision, avoid connecting the prototype to household electricity, and do not handle liquids or electrical connections while the circuit is powered.</div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-head"><span class="kicker">THE BASIC IDEA</span><h2>How It Works</h2><p>The main components work together in an electrochemical cell.</p></div>
+  <div class="split">
+    <div class="info"><h3>Electrolyte and electrodes</h3><p>The coconut vinegar acts as the electrolyte. The copper and zinc electrodes participate in an electrochemical reaction that can produce an electrical potential.</p></div>
+    <div class="info"><h3>Electrical output</h3><p>Connecting wires provide a path for current in the circuit. The multimeter and ammeter are used to measure electrical output, while the LED is used to check whether the prototype can provide light.</p></div>
+  </div>
+</section>
+
+<section class="section" id="results">
+  <div class="section-head"><span class="kicker">WHAT THE TESTING SHOWED</span><h2>Results and Findings</h2><p>Add your verified research data and documentation here.</p></div>
+  <div class="about-card"><strong>Research results:</strong> Replace this paragraph with your final measured voltage, current, power, lighting-duration results, and statistical findings. Use only the values from your actual data tables so visitors can understand the prototype's tested performance.</div>
+</section>
+</main>
+<footer>SUKASUGA &nbsp;•&nbsp; Coconut Vinegar-Powered Emergency Lamp<br><br><span style="opacity:.75">A student research innovation</span></footer>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const links=document.getElementById('navlinks');
+menuBtn.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+const themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{
+  const dark=document.body.dataset.theme!=='dark';
+  document.body.dataset.theme=dark?'dark':'light';
+  themeBtn.textContent=dark?'☾':'☼';
+  themeBtn.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+});
+const bulbToggle=document.getElementById('bulbToggle');
+const prototype=document.querySelector('.device');
+const bulbCaption=document.getElementById('bulbCaption');
+bulbToggle.addEventListener('click',()=>{
+  const isOn=bulbToggle.getAttribute('aria-pressed')==='true';
+  bulbToggle.setAttribute('aria-pressed',String(!isOn));
+  bulbToggle.setAttribute('aria-label',isOn?'Turn LED light on':'Turn LED light off');
+  prototype.classList.toggle('light-off',isOn);
+  bulbCaption.textContent=isOn?'LED OFF · TAP TO SWITCH':'LED ON · TAP TO SWITCH';
+});
+const sections=[...document.querySelectorAll('main section[id]')];
+const navAnchors=[...document.querySelectorAll('.navlinks a')];
+window.addEventListener('scroll',()=>{
+ let current='home';
+ sections.forEach(s=>{if(window.scrollY>=s.offsetTop-150)current=s.id});
+ navAnchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+});
+</script>
+</body>
+</html>
